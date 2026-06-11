@@ -1,202 +1,74 @@
-# Bricks Builder Skills
+# Bricks Builder Skill
 
-LLM-optimized skill documentation and development resources for [Bricks Builder](https://bricksbuilder.io/) WordPress theme.
+An AI skill for one-shotting [Bricks Builder](https://bricksbuilder.io/) designs as JSON — hero sections, full landing pages, headers/footers, query loops with faceted filters, ACF-driven layouts, conditions, animations, and popups. Every settings key and value shape is verified against the Bricks **2.3.6** theme source, not guessed.
 
-## How to Use These Skills
+## What's inside
 
-> Just paste the link https://github.com/wpgaurav/bricks-skills to your AI assistant and tell it to read the skill files and it will take care of everything for you.
-
-These skill files teach AI assistants how to work with Bricks Builder. Here's how to use them with different tools:
-
-### With Claude Code (Terminal/CLI)
-
-If you're using [Claude Code](https://claude.ai/code) in your terminal:
-
-1. Open this folder in your terminal
-2. Run `claude` to start Claude Code
-3. Claude automatically reads `CLAUDE.md` and understands the skills
-4. Just ask: *"Create a hero section with Bricks Builder"*
-
-### With VS Code + Claude/Copilot Extensions
-
-1. Open this folder in VS Code
-2. The `CLAUDE.md` file provides context to AI extensions
-3. For best results, open a skill file (e.g., `bricks-layouts.md`) in a tab
-4. Ask your AI assistant to create Bricks layouts
-
-### With Claude.ai, ChatGPT, or Gemini (Web)
-
-1. **Copy the skill file content** - Open the skill you need (e.g., `bricks-layouts.md`)
-2. **Paste into chat** - Start a new conversation and paste the skill content
-3. **Ask your question** - Now the AI understands Bricks format
-
-**Example workflow:**
 ```
-1. Copy contents of bricks-layouts.md
-2. Paste into Claude/ChatGPT/Gemini
-3. Ask: "Create a pricing table with 3 tiers using Bricks Builder"
-4. Copy the JSON output
-5. In Bricks Builder, right-click in structure panel and paste
+bricks-skills/            ← the repo is the skill
+├── SKILL.md              ← start here: workflow, rules, routing table
+├── references/           ← 19 focused references (loaded on demand)
+│   ├── json-formats.md       clipboard / template / postmeta formats + validation
+│   ├── style-settings.md     every _setting + exact JSON value shapes
+│   ├── elements.md           full element catalog + nestable structures
+│   ├── layout-recipes.md     grids, heroes, cards, overlap, sticky, full pages
+│   ├── query-loops.md        hasLoop + query JSON for posts/terms/users
+│   ├── query-filters.md      live search, facets, sort, AJAX pagination
+│   ├── dynamic-data.md       {tags}, filters, args, {echo:}
+│   ├── acf-providers.md      ACF deep dive (repeaters, groups, flexible) + Meta Box etc.
+│   ├── conditions.md         _conditions JSON (incl. dynamic data conditions)
+│   ├── interactions.md       _interactions, full animation list, recipes
+│   ├── popups.md             popup settings, triggers, limits, AJAX context
+│   ├── templates.md          template types, conditions, header behaviors
+│   ├── components-classes.md components, global classes/variables, palettes
+│   ├── theme-styles.md       theme styles, breakpoints, CSS pipeline
+│   └── forms / woocommerce / hooks / custom-elements / assets-permissions
+└── patterns/              ← 17 validated, paste-ready JSON files (see INDEX.md)
 ```
 
-### With Cursor, Windsurf, or Other AI IDEs
-
-1. Open this folder as your project
-2. The AI will read `CLAUDE.md` for context
-3. Reference skill files in your prompts: *"Using bricks-layouts.md, create a mobile-first grid"*
-
-### Quick Start Example
-
-**Want to create a card grid?**
-
-1. Tell your AI: *"Read bricks-layouts.md and create a 3-column card grid with hover effects"*
-2. Copy the generated JSON
-3. In Bricks Builder, right-click in the structure panel
-4. Select "Paste" or use Ctrl/Cmd+V
-5. Elements and global classes are pasted together
-
-## What's Included
-
-### Theme Source Code (Optional)
-
-- **`bricks/`** - Bricks Builder theme source (not included - paid product)
-
-For best results, add the Bricks theme files to a `bricks/` folder in this repository. This allows the AI to reference actual element implementations, understand control structures, and provide more accurate code suggestions.
-
-**To add Bricks source:**
-1. Purchase Bricks from [bricksbuilder.io](https://bricksbuilder.io/)
-2. Download the theme zip
-3. Extract to `bricks/` folder in this repository
-4. The `.gitignore` already excludes it from version control
-
-### Skill Documentation
-
-| Skill | Description |
-|-------|-------------|
-| [bricks-layouts.md](bricks-layouts.md) | Ready-to-paste sections, JSON formats, Core Framework CSS classes |
-| [bricks-elements.md](bricks-elements.md) | Building custom elements with controls and rendering |
-| [bricks-templates.md](bricks-templates.md) | Creating and managing templates programmatically |
-| [bricks-hooks.md](bricks-hooks.md) | Complete filter and action reference |
-| [core-framework.css](core-framework.css) | Utility-first CSS framework reference |
-
-## Bricks Builder JSON Format
-
-Bricks uses two distinct JSON formats:
-
-### Sections (Copy/Paste Format)
-
-For pasting directly into the builder via clipboard:
-
-```json
-{
-  "content": [
-    {
-      "id": "sec001",
-      "name": "section",
-      "parent": 0,
-      "children": ["con001"],
-      "settings": {
-        "_cssGlobalClasses": ["padding-vertical-xl"]
-      }
-    }
-  ],
-  "source": "bricksCopiedElements",
-  "sourceUrl": "https://example.com",
-  "version": "2.0.1",
-  "globalClasses": [],
-  "globalElements": []
-}
-```
-
-### Templates (Site-Wide Assignment)
-
-Full templates with metadata for importing via Bricks Templates system:
-
-```json
-{
-  "id": 1195,
-  "name": "header-new",
-  "title": "Header New",
-  "type": "header",
-  "header": [...elements...],
-  "global_classes": [...]
-}
-```
-
-### Element Structure
-
-Each element requires:
-
-| Property | Description |
-|----------|-------------|
-| `id` | Unique 6-character alphanumeric ID |
-| `name` | Element type (section, container, heading, etc.) |
-| `parent` | Parent element ID or `0` for root |
-| `children` | Array of child element IDs |
-| `settings` | Element-specific settings |
-
-### Key Element Types
-
-**Layout:** `section`, `container`, `block`, `div`
-**Content:** `heading`, `text`, `text-basic`, `button`, `image`
-**Navigation:** `nav-nested`, `dropdown`, `toggle`
-**Interactive:** `slider-nested`, `accordion`, `form`
-
-## Responsive Breakpoints
-
-Append breakpoint suffix to any setting:
-
-| Breakpoint | Suffix | Max Width |
-|------------|--------|-----------|
-| Desktop | (none) | - |
-| Laptop | `:laptop` | 1366px |
-| Tablet Landscape | `:tablet_landscape` | 1024px |
-| Tablet Portrait | `:tablet_portrait` | 991px |
-| Mobile Landscape | `:mobile_landscape` | 767px |
-| Mobile Portrait | `:mobile_portrait` | 478px |
-
-Example:
-```json
-{
-  "_direction": "row",
-  "_direction:tablet_portrait": "column",
-  "_gridTemplateColumns": "repeat(3, minmax(0, 1fr))",
-  "_gridTemplateColumns:mobile_portrait": "repeat(1, minmax(0, 1fr))"
-}
-```
-
-## Using with LLMs
-
-These skills are designed for use with LLM assistants (Claude, GPT, etc.) to:
-
-1. **Generate layouts** - Create Bricks JSON markup from design descriptions
-2. **Build custom elements** - Create PHP element classes with controls and rendering
-3. **Set up query loops** - Configure posts, terms, and user loops
-4. **Add hooks** - Implement filters and actions for customization
-5. **Optimize styling** - Use Core Framework utility classes effectively
-
-### Example Prompts
-
-> "Create a 3-column responsive grid of feature cards using Bricks Builder. Each card should have an icon, heading, and description with hover effects."
-
-> "Build a custom Bricks element for displaying team members with image, name, role, and social links."
-
-> "Add a filter to modify the Posts element query to only show posts from the last 30 days."
-
-The LLM will reference `bricks-layouts.md`, `bricks-elements.md`, and `bricks-hooks.md` to generate proper code.
-
-## WP-CLI Commands
+## Use it with Claude Code
 
 ```bash
-wp bricks regenerate_assets  # Regenerate CSS files
+# clone, then either work inside the repo (CLAUDE.md routes automatically)…
+cd bricks-skills && claude
+
+# …or install the skill globally:
+git clone https://github.com/wpgaurav/bricks-skills ~/.claude/skills/bricks
 ```
 
-## Documentation
+Then just ask:
 
-- Official: https://academy.bricksbuilder.io/
-- Developer Docs: https://academy.bricksbuilder.io/collection/developer/
+> "Build a SaaS landing page: split hero, logo strip, 3-col features, pricing, FAQ, CTA. Brand color #6d28d9."
+
+> "Create a filterable course archive — search, category filter, price sort, AJAX pagination — as paste-ready JSON."
+
+> "Team section from my ACF repeater `team_members` (photo, name, role, linkedin_url)."
+
+You get a `.json` file: paste it into the builder (clipboard format) or import it via Bricks → Templates (template format).
+
+## Use it with other AI tools
+
+Paste `SKILL.md` plus the relevant reference file(s) into Claude.ai / ChatGPT / Gemini, then ask for the layout. The references are self-contained.
+
+## Why this exists
+
+LLMs reliably produce Bricks JSON that *parses* but silently fails: camelCase typography keys, flat box-shadows, invented breakpoint names, accordion items missing their structural classes. This skill pins the exact shapes from the source:
+
+| Silent failure | Verified shape |
+|----------------|----------------|
+| `"_typography": {"fontSize": "18px"}` | `"_typography": {"font-size": "18px"}` |
+| `"_boxShadow": {"offsetY": "8px"}` | `"_boxShadow": {"values": {"offsetY": "8"}, "color": {…}}` |
+| `"_gradient": {"stops": […]}` | `"_gradient": {"colors": [{"color": {…}, "stop": "0"}]}` |
+| `"_padding:tablet"` | `"_padding:tablet_portrait"` |
+| accordion item = plain blocks | title/content wrappers need `_hidden._cssClasses` |
+
+Plus the things docs rarely cover: the exact clipboard wrapper the builder writes, template condition objects, popup setting keys (including Bricks' own `popupJustifyConent` typo), filter element wiring, ACF repeater loop `objectType`s, and the `key:breakpoint:pseudo` settings grammar.
+
+## Patterns
+
+17 validated files in [patterns/](patterns/) — heroes, feature grid, pricing, testimonials slider, FAQ accordion (with FAQ schema), CTA, contact form, ACF team loop, filterable blog archive, header/footer/popup templates, plus three **BEM class-based test builds** (`bem-hero`, `bem-card-grid`, `bem-pricing`) where every style lives in `block__element--modifier` global classes. Each file passes a structural integrity check (tree reciprocity, class references, format keys). See [INDEX.md](patterns/INDEX.md).
 
 ## License
 
-- Theme source code: Proprietary (Bricks Builder license)
-- Skill documentation: MIT
+- Skill documentation & patterns: MIT
+- Bricks theme: proprietary (not included) — [bricksbuilder.io](https://bricksbuilder.io/)

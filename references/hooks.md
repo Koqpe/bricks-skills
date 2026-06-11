@@ -1,4 +1,5 @@
-# Bricks Hooks Skill
+# Hooks (PHP Filter & Action Reference)
+
 
 This skill covers all filters and actions available in Bricks Builder for customization.
 
