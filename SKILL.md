@@ -13,6 +13,9 @@ Produce an actual `.json` file in the workspace (not inline JSON) unless the use
 
 ## Workflow
 
+0. **Clarify inputs first** — settle two things *before* writing JSON:
+   - **rem base** — confirm what `1rem` equals on the target site (1rem = ? px). Ask the user; default to **16px** if unspecified (a `html { font-size: 62.5% }` reset makes it 10px). All `rem`/`clamp()` math and any px→rem conversion from a reference depends on this. → [rem base](references/style-settings.md#root-font-size-rem-base)
+   - **reference URL** — if the user provides one (or names asset URLs), fetch it and reference its images/video/SVG/icons by absolute URL. → [references/external-assets.md](references/external-assets.md)
 1. **Pick the format** — clipboard paste vs template import vs programmatic insert → [references/json-formats.md](references/json-formats.md)
 2. **Plan structure** — semantic section → container → blocks tree; pick elements from the catalog → [references/elements.md](references/elements.md)
 3. **Style with settings** — every `_` style key and its exact value shape → [references/style-settings.md](references/style-settings.md)
@@ -73,6 +76,7 @@ Produce an actual `.json` file in the workspace (not inline JSON) unless the use
 | WooCommerce templates and elements | [references/woocommerce.md](references/woocommerce.md) |
 | PHP: custom elements with controls | [references/custom-elements.md](references/custom-elements.md) |
 | PHP: filters and actions | [references/hooks.md](references/hooks.md) |
+| External assets from a reference URL (any image/video/SVG/icon, hotlink vs re-host) | [references/external-assets.md](references/external-assets.md) |
 | Asset loading, builder permissions | [references/assets-permissions.md](references/assets-permissions.md) |
 
 Ready-to-paste examples (hero, grids, ACF loops, filtered archive, header/footer, popup…): [patterns/](patterns/) — see [patterns/INDEX.md](patterns/INDEX.md).
@@ -87,6 +91,8 @@ Ready-to-paste examples (hero, grids, ACF loops, filtered archive, header/footer
 6. **Real structure, no filler** — semantic `tag` settings on sections/blocks (`header`, `nav`, `article`, `aside`, `footer`), one `h1` per page, descending heading levels.
 7. **Global classes ride along** — any id listed in an element's `_cssGlobalClasses` must have its full class object in the top-level `globalClasses` array.
 8. **Don't invent settings keys** — only keys documented in the references or found in the Bricks source. Unknown keys are silently ignored and waste the user's trust.
+9. **Confirm the rem base before using rem** — never assume `1rem = 16px` silently. Ask the user; default to 16px only when they don't answer. Convert any px values lifted from a reference using the confirmed base.
+10. **Reference external assets by absolute `url`, never `id`** — when a reference URL or asset URLs are given, resolve every asset to an absolute URL and reference it via the media control's `url`/`external` (attachment `id`s don't resolve cross-site). Respect licensing — don't hotlink copyrighted/brand assets into production. → [references/external-assets.md](references/external-assets.md)
 
 ## Validation Checklist (run before delivering)
 

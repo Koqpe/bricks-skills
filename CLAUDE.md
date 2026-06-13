@@ -27,6 +27,7 @@ Start at [SKILL.md](SKILL.md) — it routes to per-topic references and ready-to
 | `references/dynamic-data.md`, `acf-providers.md` | Tags, args, ACF/Meta Box/etc. |
 | `references/conditions.md`, `interactions.md`, `popups.md` | Conditional rendering, animations, popups |
 | `references/templates.md`, `components-classes.md`, `theme-styles.md` | Template system, reusables, site-wide styling |
+| `references/external-assets.md` | Referencing remote images/video/SVG/icons from a reference URL (hotlink vs re-host) |
 | `references/forms.md`, `woocommerce.md`, `hooks.md`, `custom-elements.md`, `assets-permissions.md` | Forms, Woo, PHP extension points |
 | `patterns/` | Validated paste/import-ready JSON + INDEX.md (incl. `bem-*.json` class-first examples) |
 

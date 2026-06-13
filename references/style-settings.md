@@ -26,6 +26,22 @@ Examples:
 
 Breakpoint comes before pseudo. Legacy underscore syntax (`_padding_tablet_portrait`) still parses but never write it.
 
+## Root font size (rem base)
+
+`rem` resolves against the site's **root font size** (`html { font-size }`), not against the element. Before emitting any `rem`/`clamp()` value, **confirm what `1rem` equals** with the user:
+
+- **Default = 16px** — browser default; also Bricks' default unless theme styles or CSS change it. Use this if the user doesn't specify.
+- **`html { font-size: 62.5% }` reset → 1rem = 10px** — common on many themes; halves the effective size of every rem you write. A `2.5rem` heading becomes 25px, not 40px.
+- A custom root size (e.g. `18px`) shifts everything proportionally.
+
+Implications:
+
+- **Converting px from a reference** — px ÷ (rem base) = rem. At 16px, `40px → 2.5rem`; at 10px, `40px → 4rem`. Get the base wrong and the whole design scales off.
+- **When in doubt, ask, or use px** for precise one-off values and reserve `rem` for type/spacing that should scale with the root.
+- `em` is relative to the *element's* font-size — don't mix it up with `rem`.
+
+The root size lives in theme styles (`bodyTypography.font-size`) → [theme-styles.md](theme-styles.md). Bare numbers always get `px` appended (rule 4) — write the unit explicitly for `rem`.
+
 ## Core Value Shapes
 
 ### Color — always an object
